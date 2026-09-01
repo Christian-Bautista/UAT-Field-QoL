@@ -1,0 +1,2 @@
+- This project uses Python.
+- Do not add anything not specified in the prompt (i.e. no implicit assumptions of what I want added - just adhere to the prompt).
