@@ -3,6 +3,7 @@
 import copy
 import os
 import queue
+import sys
 import threading
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
@@ -11,7 +12,14 @@ from docx import Document
 from docx.table import Table
 from docx.text.paragraph import Paragraph
 
-TEMPLATE = "UAT Field Template.docx"
+
+def bundled_path(name):
+    """Return the path to a file shipped alongside the script or inside the packaged executable."""
+    base = getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base, name)
+
+
+TEMPLATE = bundled_path("UAT Field Template.docx")
 SECTION_HEADING = "Signal Coverage Test"
 ROWS_PER_AP = 5  # AP ID, Test Device 1, SSID/Band header, 2.4 GHz, 5 GHz
 VENUE_NAME_LABEL = "Venue Name"
