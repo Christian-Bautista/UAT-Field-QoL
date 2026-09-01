@@ -1,5 +1,5 @@
-('C:\\Users\\USER2\\Documents\\Github Projects\\UAT-Field-QoL\\build\\AP '
- 'Quantity Preset\\PYZ-00.pyz',
+('C:\\Users\\USER2\\Documents\\Github Projects\\UAT-Field-QoL\\build\\UAT '
+ 'Document Generator\\PYZ-00.pyz',
  [('__future__', 'C:\\Python314\\Lib\\__future__.py', 'PYMODULE'),
   ('_aix_support', 'C:\\Python314\\Lib\\_aix_support.py', 'PYMODULE'),
   ('_ast_unparse', 'C:\\Python314\\Lib\\_ast_unparse.py', 'PYMODULE'),
@@ -142,6 +142,7 @@
   ('ctypes', 'C:\\Python314\\Lib\\ctypes\\__init__.py', 'PYMODULE'),
   ('ctypes._endian', 'C:\\Python314\\Lib\\ctypes\\_endian.py', 'PYMODULE'),
   ('ctypes._layout', 'C:\\Python314\\Lib\\ctypes\\_layout.py', 'PYMODULE'),
+  ('ctypes.wintypes', 'C:\\Python314\\Lib\\ctypes\\wintypes.py', 'PYMODULE'),
   ('dataclasses', 'C:\\Python314\\Lib\\dataclasses.py', 'PYMODULE'),
   ('datetime', 'C:\\Python314\\Lib\\datetime.py', 'PYMODULE'),
   ('decimal', 'C:\\Python314\\Lib\\decimal.py', 'PYMODULE'),

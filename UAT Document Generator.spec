@@ -22,7 +22,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-    name='AP Quantity Preset',
+    name='UAT Document Generator',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
