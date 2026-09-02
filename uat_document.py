@@ -97,16 +97,35 @@ def set_cant_split(row):
         row_properties.append(row._tr.makeelement(qn("w:cantSplit"), {}))
 
 
+def iter_own_cells(row):
+    """Yield the cells that sit in the row itself, skipping cells merged in from a row above."""
+    for cell in row.cells:
+        if cell._tc.getparent() is row._tr:
+            yield cell
+
+
+def set_row_keep_with_next(row, keep):
+    """Keep a table row with the row that follows it."""
+    for cell in iter_own_cells(row):
+        for paragraph in cell.paragraphs:
+            paragraph.paragraph_format.keep_with_next = keep
+
+
 def set_keep_with_next(item, keep):
-    """Keep a paragraph, or every paragraph of a table, with the content that follows it."""
-    paragraphs = [item] if isinstance(item, Paragraph) else [
-        paragraph
-        for row in item.rows
-        for cell in row.cells
-        for paragraph in cell.paragraphs
-    ]
-    for paragraph in paragraphs:
-        paragraph.paragraph_format.keep_with_next = keep
+    """Keep a paragraph, or every row of a table, with the content that follows it."""
+    if isinstance(item, Paragraph):
+        item.paragraph_format.keep_with_next = keep
+        return
+    for row in item.rows:
+        set_row_keep_with_next(row, keep)
+
+
+def keep_ap_blocks_together(table):
+    """Hold each AP's rows on one page, so a whole block moves down rather than being split."""
+    for index, row in enumerate(table.rows):
+        set_cant_split(row)
+        is_last_row_of_block = (index + 1) % ROWS_PER_AP == 0
+        set_row_keep_with_next(row, not is_last_row_of_block)
 
 
 def keep_section_on_own_page(document, heading_text):
@@ -119,9 +138,7 @@ def keep_section_on_own_page(document, heading_text):
             for row in item.rows:
                 set_cant_split(row)
         set_keep_with_next(item, True)
-    for cell in items[-1].rows[-1].cells:
-        for paragraph in cell.paragraphs:
-            paragraph.paragraph_format.keep_with_next = False
+    set_row_keep_with_next(items[-1].rows[-1], False)
 
 
 def set_cell_text(cell, value):
@@ -180,6 +197,7 @@ def build_document_steps(template, ap_count, details):
     apply_details(document, details)
 
     yield ("Setting the page breaks...", 0.9)
+    keep_ap_blocks_together(table)
     for heading in STANDALONE_HEADINGS:
         keep_section_on_own_page(document, heading)
 
