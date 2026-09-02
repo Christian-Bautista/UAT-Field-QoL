@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UAT Document Generator</title>
+<link rel="stylesheet" href="web/styles.css">
+</head>
+<body>
+<main class="page">
+  <header class="masthead">
+    <h1>UAT Document Generator</h1>
+    <p>Builds a Wireless@SG UAT field report for the number of APs you are testing.</p>
+  </header>
+
+  <section class="card">
+    <div class="destination">
+      <button type="button" id="file-location" class="button button-ghost">File Location</button>
+      <span id="destination-path" class="destination-path">Loading&hellip;</span>
+    </div>
+
+    <p id="browser-note" class="note"></p>
+
+    <form id="form" novalidate>
+      <fieldset id="fields" class="fields" disabled>
+        <legend class="visually-hidden">Report details</legend>
+
+        <div class="field">
+          <label for="ap-count">How many APs to be tested:</label>
+          <div class="field-input">
+            <input type="text" id="ap-count" inputmode="numeric" autocomplete="off" spellcheck="false">
+            <p class="field-error" id="ap-count-error" hidden></p>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="document-name">Name of document:</label>
+          <div class="field-input">
+            <input type="text" id="document-name" autocomplete="off">
+            <p class="field-error" id="document-name-error" hidden></p>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="organisation">Organisation:</label>
+          <div class="field-input">
+            <input type="text" id="organisation" autocomplete="off">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="venue-name">Venue Name:</label>
+          <div class="field-input">
+            <input type="text" id="venue-name" autocomplete="off">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="venue-address">Venue Address:</label>
+          <div class="field-input">
+            <input type="text" id="venue-address" autocomplete="off">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="venue-postal-code">Venue Postal Code:</label>
+          <div class="field-input">
+            <input type="text" id="venue-postal-code" inputmode="numeric" autocomplete="off">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="venue-category">Venue Category:</label>
+          <div class="field-input">
+            <input type="text" id="venue-category" autocomplete="off">
+          </div>
+        </div>
+      </fieldset>
+
+      <div class="actions">
+        <button type="submit" id="generate" class="button button-primary" disabled>Generate Document</button>
+        <div class="progress" id="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Generation progress">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <span class="status" id="status" role="status" aria-live="polite">Loading Python&hellip;</span>
+      </div>
+
+      <button type="button" id="reset" class="button button-danger" disabled>Reset Fields</button>
+    </form>
+  </section>
+</main>
+<script type="module" src="web/app.js"></script>
+</body>
+</html>
