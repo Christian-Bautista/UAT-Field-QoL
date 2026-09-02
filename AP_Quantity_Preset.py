@@ -140,10 +140,11 @@ class APQuantityPreset:
         self.venue_address = self.add_field(frame, 5, "Venue Address: ")
         self.venue_postal_code = self.add_field(frame, 6, "Venue Postal Code: ")
         self.venue_category = self.add_field(frame, 7, "Venue Category: ")
+        self.block = self.add_field(frame, 8, "Block: ")
         self.venue_address.trace_add("write", self.on_venue_address_changed)
 
         actions = ttk.Frame(frame)
-        actions.grid(row=8, column=0, columnspan=2, sticky="w", pady=(12, 0))
+        actions.grid(row=9, column=0, columnspan=2, sticky="w", pady=(12, 0))
 
         self.generate_button = ttk.Button(actions, text="Generate Document", command=self.generate)
         self.generate_button.grid(row=0, column=0, sticky="w")
@@ -201,6 +202,7 @@ class APQuantityPreset:
             self.venue_address,
             self.venue_postal_code,
             self.venue_category,
+            self.block,
         ):
             variable.set("")
 
@@ -243,6 +245,7 @@ class APQuantityPreset:
             "venue_address": self.venue_address.get().strip(),
             "venue_postal_code": self.venue_postal_code.get().strip(),
             "venue_category": self.venue_category.get().strip(),
+            "block": self.block.get().strip(),
         }
 
         self.set_inputs_enabled(False)

@@ -41,6 +41,7 @@ const fields = {
   venueAddress: document.getElementById("venue-address"),
   venuePostalCode: document.getElementById("venue-postal-code"),
   venueCategory: document.getElementById("venue-category"),
+  block: document.getElementById("block"),
 };
 const form = document.getElementById("form");
 const fieldset = document.getElementById("fields");
@@ -278,6 +279,7 @@ async function generate(event) {
     venue_address: fields.venueAddress.value.trim(),
     venue_postal_code: fields.venuePostalCode.value.trim(),
     venue_category: fields.venueCategory.value.trim(),
+    block: fields.block.value.trim(),
   });
 
   setInputsEnabled(false);

@@ -15,6 +15,7 @@ VENUE_NAME_LABEL = "Venue Name"
 VENUE_ADDRESS_LABEL = "Venue Address"
 VENUE_POSTAL_CODE_LABEL = "Venue Postal Code"
 VENUE_CATEGORY_LABEL = "Venue Category"
+BLOCK_PLACEHOLDER = "[Number]"
 
 
 def find_ap_table(document):
@@ -32,6 +33,36 @@ def find_ap_table(document):
         elif tag == "tbl" and in_section:
             return Table(element, document)
     raise LookupError("Could not find the section 3.2.1 table in the template.")
+
+
+def find_ap_heading(document):
+    """Return the section 3.2.1 heading, the first Heading 3 of the Signal Coverage Test section."""
+    in_section = False
+    for item in iter_block_items(document):
+        if not isinstance(item, Paragraph):
+            continue
+        style = item.style.name
+        if style == "Heading 2":
+            in_section = item.text.strip() == SECTION_HEADING
+        elif style == "Heading 1":
+            in_section = False
+        elif style == "Heading 3" and in_section:
+            return item
+    raise LookupError("Could not find the section 3.2.1 heading in the template.")
+
+
+def replace_placeholder(paragraph, placeholder, value):
+    """Put value where the placeholder sits, keeping the formatting of the run holding it."""
+    for run in paragraph.runs:
+        if placeholder in run.text:
+            run.text = run.text.replace(placeholder, value)
+            return
+    if placeholder not in paragraph.text:
+        return
+    # Word sometimes splits the placeholder over several runs; rewrite the paragraph in that case.
+    paragraph.runs[0].text = paragraph.text.replace(placeholder, value)
+    for run in paragraph.runs[1:]:
+        run.text = ""
 
 
 def trim_ap_block(table):
@@ -171,6 +202,7 @@ def apply_details(document, details):
         set_labelled_value(container, VENUE_ADDRESS_LABEL, details["venue_address"])
         set_labelled_value(container, VENUE_POSTAL_CODE_LABEL, details["venue_postal_code"])
         set_labelled_value(container, VENUE_CATEGORY_LABEL, details["venue_category"])
+    replace_placeholder(find_ap_heading(document), BLOCK_PLACEHOLDER, details["block"])
 
 
 def build_document_steps(template, ap_count, details):
